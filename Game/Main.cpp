@@ -1,21 +1,41 @@
 // Main.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include "pch.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Renderer.h"
 #include "Resources/ResourceManager.h"
 #include "Input/InputSystem.h"
+#include "Core/Timer.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <chrono>
 
 nc::Renderer renderer;
 nc::ResourceManager resourceManager;
 nc::InputSystem inputSystem;
+nc::FrameTimer timer;
+
+namespace nc
+{
+	using clock = std::chrono::high_resolution_clock;
+	using clock_duration = std::chrono::duration<clock::rep, std::nano>;
+}
+
 
 int main(int, char**)
 {
+	//nc::clock::time_point start = nc::clock::now();
+	//for (size_t i = 0; i < 100; i++)
+	//{
+	//	std::sqrt(rand() % 100);
+	//}
+	//nc::clock_duration duration = nc::clock::now() - start;
+	//std::cout << duration.count() << std::endl;
+	//std::cout << timer.ElapsedSeconds();
+
 	renderer.Startup();
 	resourceManager.Startup();
 	inputSystem.Startup();
@@ -25,8 +45,8 @@ int main(int, char**)
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 	IMG_Quit();
 
-	nc::Texture* texture1 = resourceManager.Get<nc::Texture>("sf2.png", &renderer);
-	nc::Texture* texture2 = resourceManager.Get<nc::Texture>("sf2.png", &renderer);
+	nc::Texture* background = resourceManager.Get<nc::Texture>("background.png", &renderer);
+	nc::Texture* car = resourceManager.Get<nc::Texture>("cars.png", &renderer);
 
 	float angle{ 0 };
 	nc::Vector2 position{ 400, 300 };
@@ -43,26 +63,28 @@ int main(int, char**)
 			break;
 		}
 
+		// update
+		timer.Tick();
 		resourceManager.Update();
 		inputSystem.Update();
 
-		// Begin Frame
-		renderer.BeginFrame();
-		//draw
-		angle = angle + 1;
-		texture1->Draw(position, { 1, 1 }, angle);
-
 		if (inputSystem.GetButtonState(SDL_SCANCODE_LEFT) == nc::InputSystem::eButtonState::HELD)
 		{
-			position.x = position.x - 1.0f;
+			position.x = position.x - 200.0f * timer.DeltaTime();
 		}
 		if (inputSystem.GetButtonState(SDL_SCANCODE_RIGHT) == nc::InputSystem::eButtonState::HELD)
 		{
-			position.x = position.x + 1.0f;
+			position.x = position.x + 200.0f * timer.DeltaTime();
 		}
 
 
-		texture2->Draw({ 200, 400 }, { 2, 2 }, angle + 90);
+		// Begin Frame
+		//draw
+		renderer.BeginFrame();
+
+		angle = angle + 90 * timer.DeltaTime();
+		background->Draw({0, 0});
+		car->Draw({ 0, 16, 64, 144 }, position);
 
 		// End Frame
 		renderer.EndFrame();
