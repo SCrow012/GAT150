@@ -9,6 +9,10 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
+#include "Math/Color.h"
+#include "Math/Math2.h"
+#include "Math/Random.h"
+#include "Math/Transform.h"
 
 #include <SDL.h>
 
@@ -19,5 +23,7 @@
 #include <array>
 #include <list>
 #include <map>
+#include <SDL_image.h>
+#include <chrono>
 
 #endif //PCH_H

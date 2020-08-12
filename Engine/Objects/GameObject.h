@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine.h"
 #include "Object.h"
 #include "Math/Transform.h"
 
@@ -16,18 +17,7 @@ namespace nc
 		void Draw();
 
 		template<typename T>
-		T* GetComponent()
-		{
-			T* result{ nullptr };
-
-			for (auto component : m_components)
-			{
-				result = dynamic_cast<T*>(component);
-				if (result) break;
-			}
-
-			return result;
-		}
+		T* GetComponent();
 
 		void AddComponent(Component* component);
 		void RemoveComponent(Component* component);
@@ -35,8 +25,23 @@ namespace nc
 
 	public:
 		Transform m_transform;
+		Engine* m_engine;
 
 	protected:
 		std::vector<Component*> m_components;
 	};
+
+	template<typename T>
+	T* GameObject::GetComponent()
+	{
+		T* result{ nullptr };
+
+		for (auto component : m_components)
+		{
+			result = dynamic_cast<T*>(component);
+			if (result) break;
+		}
+
+		return result;
+	}
 }
