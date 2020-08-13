@@ -90,7 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\Shara\source\repos\GAT150\Middleware\SDL2-2.0.12\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Shara\source\repos\GAT150\Middleware\SDL2-2.0.12\include;C:\Users\Shara\source\repos\GAT150\Middleware\JSON\include\rapidjson;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -163,6 +163,7 @@
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RenderComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
+    <ClInclude Include="Core\JSON.h" />
     <ClInclude Include="Core\System.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Engine.h" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
+    <ClCompile Include="Core\JSON.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />

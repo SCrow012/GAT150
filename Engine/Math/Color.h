@@ -64,4 +64,11 @@ namespace nc
 
 		return color; // (8,8,8,8) <-> (32)
 	}
+
+	inline std::ostream& operator<<(std::ostream& stream, Color& c)
+	{
+		stream << c.r << " " << c.g << " " << c.b;
+
+		return stream;
+	}
 }

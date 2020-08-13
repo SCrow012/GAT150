@@ -6,7 +6,7 @@ namespace nc
 {
 	void PhysicComponent::Create(void* data)
 	{
-		m_velocity = nc::Vector2::forward * 100;
+		m_drag = 0.95f;
 	}
 
 	void PhysicComponent::Destroy()
