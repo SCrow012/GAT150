@@ -13,6 +13,8 @@ namespace nc
 		virtual void Create(void* data = nullptr) override;
 		virtual void Destroy() override;
 
+		void Read(const rapidjson::Value& value) override;
+
 		void Update();
 		void Draw();
 

@@ -163,6 +163,7 @@
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RenderComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
+    <ClInclude Include="Core\Assert.h" />
     <ClInclude Include="Core\JSON.h" />
     <ClInclude Include="Core\System.h" />
     <ClInclude Include="Core\Timer.h" />
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
+    <ClCompile Include="Core\Assert.cpp" />
     <ClCompile Include="Core\JSON.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Engine.cpp" />

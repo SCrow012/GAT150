@@ -104,6 +104,9 @@
     <ClInclude Include="Core\JSON.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Assert.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -146,6 +149,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Core\JSON.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Assert.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
