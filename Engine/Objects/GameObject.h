@@ -25,9 +25,12 @@ namespace nc
 		void RemoveComponent(Component* component);
 		void RemoveAllComponents();
 
+		void ReadComponents(const rapidjson::Value& value);
+
 	public:
 		Transform m_transform;
 		Engine* m_engine;
+		std::string m_name;
 
 	protected:
 		std::vector<Component*> m_components;

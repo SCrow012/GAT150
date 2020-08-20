@@ -4,51 +4,25 @@
 #include "pch.h"
 #include "Graphics/Texture.h"
 #include "Objects/GameObject.h"
-#include "Components/PhysicsComponent.h"
-#include "Components/SpriteComponent.h"
 #include "Components/PlayerComponents.h"
 #include "Core/JSON.h"
+#include "Objects/ObjectFactory.h"
+#include "Objects/Scene.h"
 
 nc::Engine engine;
-nc::GameObject player;
-
-namespace nc
-{
-	using clock = std::chrono::high_resolution_clock;
-	using clock_duration = std::chrono::duration<clock::rep, std::nano>;
-}
+nc::Scene scene;
 
 int main(int, char**)
 {
+	scene.Create(&engine);
 	engine.Startup();
 
-	player.Create(&engine);
+	nc::ObjectFactory::Instance().Initialize();
+	nc::ObjectFactory::Instance().Register("PlayerComponent", nc::Object::Instantiate<nc::PlayerComponent>);
 
 	rapidjson::Document document;
-	nc::json::Load("player.txt", document);
-	player.Read(document);
-
-	nc::Component* component;
-	component = new nc::PhysicComponent;
-	player.AddComponent(component);
-	component->Create();
-
-	component = new nc::SpriteComponent;
-	player.AddComponent(component);
-	nc::json::Load("sprite.txt", document);
-	component->Read(document);
-	component->Create();
-
-	component = new nc::PlayerComponent;
-	player.AddComponent(component);
-	component->Create();
-
-	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-	IMG_Quit();
-
-	nc::Texture* background = engine.GetSystem<nc::ResourceManager>()->Get<nc::Texture>("background.png", engine.GetSystem<nc::Renderer>());
-
-	nc::Vector2 velocity{ 0, 0 };
+	nc::json::Load("scene.txt", document);
+	scene.Read(document);
 
 	SDL_Event event;
 	bool quit = false;
@@ -64,7 +38,7 @@ int main(int, char**)
 
 		// update
 		engine.Update();
-		player.Update();
+		scene.Update();
 
 		//quit = (engine.GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_ESC) == nc::InputSystem::eButtonState::PRESSED)
 		//	if (engine.GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_ESC) == nc::InputSystem::eButtonState::PRESSED)
@@ -72,19 +46,15 @@ int main(int, char**)
 		//		quit = true;
 		//	}
 
-
-		//player controller
-
 		
 		//draw
 		engine.GetSystem<nc::Renderer>()->BeginFrame();
-		background->Draw({0, 0});
-
-		player.Draw();
+		scene.Draw();
 
 		engine.GetSystem<nc::Renderer>()->EndFrame();
 	}
 
+	scene.Destroy();
 	engine.Shutdown();
 
 	return 0;

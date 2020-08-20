@@ -1,9 +1,9 @@
 #pragma once
-#include "RenderComponent.h"
+#include "SpriteComponent.h"
 
 namespace nc
 {
-	class SpriteComponent : public RenderComponent
+	class SpriteAnimationComponent : public SpriteComponent
 	{
 	public:
 		virtual void Create(void* data = nullptr) override;
@@ -13,11 +13,14 @@ namespace nc
 
 		virtual void Update() override;
 
-		virtual void Draw() override;
-
 	protected:
-		std::string m_textureName;
-		Vector2 m_orgin;
-		SDL_Rect m_rect;
+		int m_frame{ 0 };
+		float m_frameTimer{ 0 };
+		float m_frameRate{ 0 };
+
+		int m_numX;
+		int m_numY;
+		int m_numFrames;
+		int m_fps;
 	};
 }
