@@ -4,6 +4,37 @@
 
 namespace nc
 {
+	template<typename TBase>
+	class CreatorBase
+	{
+	public:
+		virtual TBase* Create() const = 0;
+	};
+
+	template<typename T, typename TBase>
+	class Creator : public CreatorBase<TBase>
+	{
+	public:
+		TBase* Create() const override
+		{
+			return new T;
+		}
+	};
+
+	template<typename TBase>
+	class Prototype : public CreatorBase<TBase>
+	{
+	public:
+		Prototype(TBase* instance) : m_instance{ instance } {}
+		TBase* Create() const override
+		{
+			return m_instance->Clone();
+		}
+
+	private:
+		TBase* m_instance;
+	};
+
 	template<typename TBase, typename TKey>
 	class Factory
 	{
@@ -13,10 +44,10 @@ namespace nc
 	public:
 		template<typename T = TBase>
 		T* Create(TKey key);
-		void Register(TKey key, function_t function);
+		void Register(TKey key, CreatorBase<TBase>* creator);
 
 	protected:
-		std::map<TKey, function_t> m_regristry;
+		std::map<TKey, CreatorBase<TBase>*> m_regristry;
 	};
 
 	template<typename TBase, typename TKey>
@@ -28,15 +59,16 @@ namespace nc
 		auto iter = m_regristry.find(key);
 		if (iter != m_regristry.end())
 		{
-			object = dynamic_cast<T*>(iter->second());
+			CreatorBase<TBase>* creator = iter->second;
+			object = dynamic_cast<T*>(creator->Create());
 		}
 
 		return object;
 	}
 
 	template<typename TBase, typename TKey>
-	inline void Factory<TBase, TKey>::Register(TKey key, function_t function)
+	inline void Factory<TBase, TKey>::Register(TKey key, CreatorBase<TBase>* creator)
 	{
-		m_regristry[key] = function;
+		m_regristry[key] = creator;
 	}
 }

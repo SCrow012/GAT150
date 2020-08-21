@@ -10,8 +10,12 @@ namespace nc
 	class GameObject :public Object
 	{
 	public:
+		GameObject() = default;
+		GameObject(const GameObject& other);
+
 		virtual void Create(void* data = nullptr) override;
 		virtual void Destroy() override;
+		virtual Object* Clone() const override { return new GameObject{ *this }; };
 
 		void Read(const rapidjson::Value& value) override;
 
@@ -29,7 +33,7 @@ namespace nc
 
 	public:
 		Transform m_transform;
-		Engine* m_engine;
+		Engine* m_engine{ nullptr };
 		std::string m_name;
 
 	protected:
