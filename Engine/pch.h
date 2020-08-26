@@ -29,5 +29,6 @@
 #include <SDL_image.h>
 #include <chrono>
 #include <cassert>
+#include <time.h>
 
 #endif //PCH_H

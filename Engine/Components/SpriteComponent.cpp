@@ -16,7 +16,7 @@ void nc::SpriteComponent::Destroy()
 void nc::SpriteComponent::Read(const rapidjson::Value& value)
 {
 	json::Get(value, "texture", m_textureName);
-	json::Get(value, "orgin", m_orgin);
+	json::Get(value, "origin", m_orgin);
 	json::Get(value, "rect", m_rect);
 }
 

@@ -16,27 +16,28 @@ namespace nc
 
 	void PlayerComponent::Update()
 	{
-		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_LEFT) == nc::InputSystem::eButtonState::HELD)
+		nc::Vector2 force{ 0, 0 };
+
+		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_A) == nc::InputSystem::eButtonState::HELD)
 		{
-			m_owner->m_transform.angle = m_owner->m_transform.angle - 200.0f * m_owner->m_engine->GetTimer().DeltaTime();
+			force.x = -20000;
 		}
-		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_RIGHT) == nc::InputSystem::eButtonState::HELD)
+		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_D) == nc::InputSystem::eButtonState::HELD)
 		{
-			m_owner->m_transform.angle = m_owner->m_transform.angle + 200.0f * m_owner->m_engine->GetTimer().DeltaTime();
+			force.x = 20000;
 		}
 
-		nc::Vector2 force{ 0,0 };
-		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_UP) == nc::InputSystem::eButtonState::HELD)
+		if (m_owner->m_engine->GetSystem<nc::InputSystem>()->GetButtonState(SDL_SCANCODE_SPACE) == nc::InputSystem::eButtonState::PRESSED)
 		{
-			force = nc::Vector2::forward * 1000.0f;
+			force.y = -400000;
 		}
-		force = nc::Vector2::Rotate(force, nc::DegreesToRadians(m_owner->m_transform.angle));
 
 		PhysicComponent* component = m_owner->GetComponent<PhysicComponent>();
 		if (component)
 		{
 			component->SetForce(force);
 		}
+
 	}
 
 }

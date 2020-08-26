@@ -3,32 +3,8 @@
 		{
 			"type":"GameObject",
 			"name":"ProtoExplosion",
-			"position":[
-				400,
-				300
-			],
-			"scale":1,
-			"angle":0,
-			"Components":[
-				{
-					"type":"SpriteAnimationComponent",
-					"texture":"explosion.png",
-					"orgin":[
-						0.5,
-						0.5
-					],
-					"numX":5,
-					"numY":5,
-					"numFrames":25,
-					"fps":30
-				}
-			]
-		}
-	],
-	"GameObjects":[
-		{
-			"type":"GameObject",
-			"name":"Background",
+			"lifetime":3.0,
+			"transient":true,
 			"position":[
 				0,
 				0
@@ -37,37 +13,30 @@
 			"angle":0,
 			"Components":[
 				{
-					"type":"SpriteComponent",
-					"texture":"background.png",
-					"rect":[
-						0,
-						0,
-						800,
-						600
-					]
+					"type":"SpriteAnimationComponent",
+					"texture":"explosion.png",
+					"numX":5,
+					"numY":5,
+					"numFrames":25,
+					"fps":30
 				}
 			]
 		},
 		{
 			"type":"GameObject",
-			"name":"Player",
+			"name":"EnemyProto",
 			"position":[
-				400,
-				300
+				40,
+				30
 			],
 			"scale":1,
 			"angle":0,
 			"Components":[
 				{
-					"type":"PhysicsComponent"
-				},
-				{
-					"type":"PlayerComponent"
-				},
-				{
 					"type":"SpriteComponent",
+					"z":1,
 					"texture":"cars.png",
-					"orgin":[
+					"origin":[
 						0.5,
 						0.5
 					],
@@ -82,7 +51,85 @@
 		},
 		{
 			"type":"GameObject",
-			"name":"Explosion",
+			"name":"ProtoBox",
+			"position":[
+				400,
+				500
+			],
+			"scale":1,
+			"angle":0,
+			"Components":[
+				{
+					"type":"SpriteComponent",
+					"texture":"box.png",
+					"origin":[
+						0.5,
+						0.5
+					],
+					"rect":[
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				{
+					"type":"RigidBodyComponent",
+					"isDynamic":true,
+					"lockAngle":false,
+					"size":[
+						16,
+						16
+					],
+					"density":1,
+					"friction":1,
+					"restitution":0.0
+				}
+			]
+		}
+	],
+	"GameObjects":[
+		{
+			"type":"GameObject",
+			"name":"Ground",
+			"position":[
+				400,
+				500
+			],
+			"scale":1,
+			"angle":0,
+			"Components":[
+				{
+					"type":"SpriteComponent",
+					"texture":"ground.png",
+					"origin":[
+						0.5,
+						0.5
+					],
+					"rect":[
+						0,
+						0,
+						800,
+						32
+					]
+				},
+				{
+					"type":"RigidBodyComponent",
+					"isDynamic":false,
+					"lockAngle":true,
+					"size":[
+						400,
+						16
+					],
+					"density":1,
+					"friction":1,
+					"restitution":0.0
+				}
+			]
+		},
+		{
+			"type":"GameObject",
+			"name":"Player",
 			"position":[
 				400,
 				300
@@ -91,16 +138,33 @@
 			"angle":0,
 			"Components":[
 				{
-					"type":"SpriteAnimationComponent",
-					"texture":"explosion.png",
-					"orgin":[
+					"type":"RigidBodyComponent",
+					"isDynamic":true,
+					"lockAngle":true,
+					"size":[
+						16,
+						32
+					],
+					"density":1,
+					"friction":1,
+					"restitution":0.0
+				},
+				{
+					"type":"PlayerComponent"
+				},
+				{
+					"type":"SpriteComponent",
+					"texture":"player.png",
+					"origin":[
 						0.5,
 						0.5
 					],
-					"numX":5,
-					"numY":5,
-					"numFrames":25,
-					"fps":30
+					"rect":[
+						0,
+						0,
+						32,
+						64
+					]
 				}
 			]
 		}

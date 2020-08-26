@@ -37,10 +37,13 @@ namespace nc
 		json::Get(value, "scale", m_transform.scale);
 		json::Get(value, "angle", m_transform.angle);
 
-		const rapidjson::Value& componentsValue = value["Components"];
-		if (componentsValue.IsArray())
+		if (value.HasMember("Components"))
 		{
-			ReadComponents(componentsValue);
+			const rapidjson::Value& componentsValue = value["Components"];
+			if (componentsValue.IsArray())
+			{
+				ReadComponents(componentsValue);
+			}
 		}
 
 	}
@@ -58,6 +61,14 @@ namespace nc
 		{
 			component->Draw();
 		}
+	}
+	void GameObject::BeginContact(GameObject* other)
+	{
+		std::cout << "begin: " << other->m_name << std::endl;
+	}
+	void GameObject::EndContact(GameObject* other)
+	{
+		std::cout << "end: " << other->m_name << std::endl;
 	}
 	void GameObject::AddComponent(Component* component)
 	{
