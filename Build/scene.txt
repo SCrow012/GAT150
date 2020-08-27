@@ -24,6 +24,42 @@
 		},
 		{
 			"type":"GameObject",
+			"name":"ProtoCoin",
+			"tag":"Coin",
+			"transient":false,
+			"position":[
+				0,
+				0
+			],
+			"scale":1,
+			"angle":0,
+			"Components":[
+				{
+					"type":"SpriteAnimationComponent",
+					"texture":"coin.png",
+					"origin": [0.5, 0.5],
+					"numX":8,
+					"numY":1,
+					"numFrames":8,
+					"fps":30
+				},
+				{
+					"type":"RigidBodyComponent",
+					"isDynamic":false,
+					"isSensor":true,
+					"lockAngle":false,
+					"size":[
+						16,
+						16
+					],
+					"density":1,
+					"friction":1,
+					"restitution":0.0
+				}
+			]
+		},
+		{
+			"type":"GameObject",
 			"name":"EnemyProto",
 			"position":[
 				40,
@@ -61,7 +97,7 @@
 			"Components":[
 				{
 					"type":"SpriteComponent",
-					"texture":"box.png",
+					"texture":"textures/crate.png",
 					"origin":[
 						0.5,
 						0.5
@@ -91,7 +127,34 @@
 	"GameObjects":[
 		{
 			"type":"GameObject",
+			"name":"Background",
+			"position":[
+				0,
+				-75
+			],
+			"scale":1,
+			"angle":0,
+			"Components":[
+				{
+					"type":"SpriteComponent",
+					"texture":"forest.png",
+					"origin":[
+						0.0,
+						0.0
+					],
+					"rect":[
+						0,
+						0,
+						800,
+						600
+					]
+				}
+			]
+		},
+		{
+			"type":"GameObject",
 			"name":"Ground",
+			"tag":"Floor",
 			"position":[
 				400,
 				500
@@ -104,7 +167,7 @@
 					"texture":"ground.png",
 					"origin":[
 						0.5,
-						0.5
+						1.5
 					],
 					"rect":[
 						0,
@@ -122,7 +185,7 @@
 						16
 					],
 					"density":1,
-					"friction":1,
+					"friction":7,
 					"restitution":0.0
 				}
 			]

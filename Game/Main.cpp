@@ -26,9 +26,9 @@ int main(int, char**)
 
 	for (size_t i = 0; i < 10; i++)
 	{
-		nc::GameObject* gameObject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoBox");
-		gameObject->m_transform.position = { nc::random(0, 800), nc::random(0, 300) };
-		gameObject->m_transform.angle = nc::random(0, 360);
+		nc::GameObject* gameObject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoCoin");
+		gameObject->m_transform.position = { nc::random(0, 800), nc::random(300, 450) };
+		//gameObject->m_transform.angle = nc::random(0, 360);
 		
 		scene.AddGameObject(gameObject);
 	}

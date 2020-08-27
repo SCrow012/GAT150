@@ -90,7 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\include;$(SolutionDir)Middleware\JSON\include\rapidjson;$(SolutionDir)Middleware\Box2D\include;$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\include;$(SolutionDir)Middleware\JSON\include\rapidjson;$(SolutionDir)Middleware\Box2D\include;$(SolutionDir)Middleware\fmod\api\core\inc;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -98,7 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;box2d.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;box2d.lib;fmod_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\lib\x64;$(SolutionDir)Middleware\Box2D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -129,7 +129,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\include;$(SolutionDir)Middleware\JSON\include\rapidjson;$(SolutionDir)Middleware\Box2D\include;$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\include;$(SolutionDir)Middleware\JSON\include\rapidjson;$(SolutionDir)Middleware\Box2D\include;$(SolutionDir)Middleware\fmod\api\core\inc;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -137,8 +137,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\lib\x64;$(SolutionDir)Middleware\Box2D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;box2d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Middleware\SDL2-2.0.12\lib\x64;$(SolutionDir)Middleware\Box2D\lib;$(SolutionDir)Middleware\fmod\api\core\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;box2d.lib;fmod_vc.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,7 +161,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Audio\AudioChannel.h" />
     <ClInclude Include="Audio\AudioSystem.h" />
+    <ClInclude Include="Audio\Sound.h" />
+    <ClInclude Include="Components\AudioComponent.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RenderComponent.h" />
@@ -197,7 +200,10 @@
     <ClInclude Include="Resources\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Audio\AudioChannel.cpp" />
     <ClCompile Include="Audio\AudioSystems.cpp" />
+    <ClCompile Include="Audio\Sound.cpp" />
+    <ClCompile Include="Components\AudioComponent.cpp" />
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Components\RigidBodyComponent.cpp" />
     <ClCompile Include="Components\SpriteAnimationComponent.cpp" />

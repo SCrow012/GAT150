@@ -2,6 +2,7 @@
 #include "Core/Factory.h"
 #include "Core/Singleton.h"
 #include "Object.h"
+#include "Audio/AudioSystem.h"
 
 namespace nc
 {

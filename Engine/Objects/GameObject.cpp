@@ -9,6 +9,7 @@ namespace nc
 	GameObject::GameObject(const GameObject& other)
 	{
 		m_name = other.m_name;
+		m_tag = other.m_tag;
 		m_transform = other.m_transform;
 		m_engine = other.m_engine;
 
@@ -29,9 +30,11 @@ namespace nc
 	{
 		RemoveAllComponents();
 	}
+
 	void GameObject::Read(const rapidjson::Value& value)
 	{
 		json::Get(value, "name", m_name);
+		json::Get(value, "tag", m_tag);
 
 		json::Get(value, "position", m_transform.position);
 		json::Get(value, "scale", m_transform.scale);
@@ -47,6 +50,7 @@ namespace nc
 		}
 
 	}
+
 	void GameObject::Update()
 	{
 		for (auto component : m_components)
@@ -54,6 +58,7 @@ namespace nc
 			component->Update();
 		}
 	}
+
 	void GameObject::Draw()
 	{
 		RenderComponent* component = GetComponent<RenderComponent>();
@@ -62,18 +67,37 @@ namespace nc
 			component->Draw();
 		}
 	}
+
 	void GameObject::BeginContact(GameObject* other)
 	{
-		std::cout << "begin: " << other->m_name << std::endl;
+		m_contacts.push_back(other);
 	}
+
 	void GameObject::EndContact(GameObject* other)
 	{
-		std::cout << "end: " << other->m_name << std::endl;
+		m_contacts.remove(other);
 	}
+
+	std::vector<GameObject*> GameObject::GetContactsWithTag(const std::string& tag)
+	{
+		std::vector<GameObject*> contacts;
+
+		for (auto contact : m_contacts)
+		{
+			if (contact->m_tag == tag)
+			{
+				contacts.push_back(contact);
+			}
+		}
+
+		return contacts;
+	}
+
 	void GameObject::AddComponent(Component* component)
 	{
 		m_components.push_back(component);
 	}
+
 	void GameObject::RemoveComponent(Component* component)
 	{
 		auto iter = std::find(m_components.begin(), m_components.end(), component);
@@ -83,6 +107,7 @@ namespace nc
 			delete (*iter);
 		}
 	}
+
 	void GameObject::RemoveAllComponents()
 	{
 		for (auto component : m_components)
