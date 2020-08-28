@@ -97,7 +97,7 @@
 			"Components":[
 				{
 					"type":"SpriteComponent",
-					"texture":"textures/crate.png",
+					"texture":"crate.png",
 					"origin":[
 						0.5,
 						0.5
@@ -228,6 +228,12 @@
 						32,
 						64
 					]
+					},
+					{
+					"type":"AudioComponent",
+					"sound":"jump.wav",
+					"playOnAwake": true,
+					"loop": false
 				}
 			]
 		}
