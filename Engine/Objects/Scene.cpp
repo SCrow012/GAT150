@@ -51,11 +51,10 @@ namespace nc
 				GameObject* gameObject = ObjectFactory::Instance().Create<GameObject>(typeName);
 					if (gameObject)
 					{
-						// call game object create, pass in m_engine
-						gameObject->Create(m_engine);
-						// call game object read
+						
+						gameObject->Create(this);
 						gameObject->Read(objectValue);
-						// add game object to scene
+						
 						AddGameObject(gameObject);
 					}
 			}
@@ -70,17 +69,14 @@ namespace nc
 			if (objectValue.IsObject())
 			{
 				std::string typeName;
-				// read game object “type” name from json (Get)
 				json::Get(objectValue, "type", typeName);
 
 				GameObject* gameObject = ObjectFactory::Instance().Create<GameObject>(typeName);
 				if (gameObject)
 				{
-					// call game object create, pass in m_engine
-					gameObject->Create(m_engine);
-					// call game object read
+					gameObject->Create(this);
 					gameObject->Read(objectValue);
-					// add game object to scene
+					
 					ObjectFactory::Instance().Register(gameObject->m_name, new Prototype<Object>(gameObject));
 				}
 			}
@@ -89,12 +85,26 @@ namespace nc
 
 	void Scene::Update()
 	{
-		// iterate through the actors and call Update on each actor
 		for (auto gameObject : m_gameObjects)
 		{
-			// update
 			gameObject->Update();
 		}	
+
+		// remove/destroy game objects
+		auto iter = m_gameObjects.begin();
+		while (iter != m_gameObjects.end())
+		{
+			if ((*iter)->m_flags[GameObject::eFlags::DESTROY])
+			{
+				(*iter)->Destroy();
+				delete (*iter);
+				iter = m_gameObjects.erase(iter);
+			}
+			else
+			{
+				iter++;
+			}
+		}
 
 	}
 

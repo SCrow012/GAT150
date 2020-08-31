@@ -2,6 +2,7 @@
 #include "PlayerComponents.h"
 #include "Objects/GameObject.h"
 #include "Components/PhysicsComponent.h"
+#include "Components/SpriteComponent.h"
 #include "Components/AudioComponent.h"
 
 namespace nc
@@ -45,7 +46,14 @@ namespace nc
 		PhysicComponent* component = m_owner->GetComponent<PhysicComponent>();
 		if (component)
 		{
-			component->SetForce(force);
+			component->ApplyForce(force);
+
+			SpriteComponent* spriteComponent = m_owner->GetComponent<SpriteComponent>();
+
+			Vector2 velocity = component->GetVelocity();
+			if (velocity.x >= 0.5f) spriteComponent->Flip(false);
+			if (velocity.x <= -0.5f) spriteComponent->Flip();
+			
 		}
 
 		// check collision
@@ -54,6 +62,9 @@ namespace nc
 		{
 			contact->m_flags[GameObject::eFlags::DESTROY] = true;
 		}
+
+		auto enemyContacts = m_owner->GetContactsWithTag("Enemy");
+		if (!enemyContacts.empty()) std::cout << "enemy hit\n";
 
 	}
 

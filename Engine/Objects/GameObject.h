@@ -3,10 +3,12 @@
 #include "Object.h"
 #include "Math/Transform.h"
 #include <bitset>
+#include <list>
 
 namespace nc
 {
 	class Component;
+	class Scene;
 
 	class GameObject :public Object
 	{
@@ -48,6 +50,7 @@ namespace nc
 	public:
 		Transform m_transform;
 		Engine* m_engine{ nullptr };
+		Scene* m_scene{ nullptr };
 		std::string m_name;
 		std::string m_tag;
 		std::bitset<32> m_flags;

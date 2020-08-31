@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/System.h"
 #include "box2d/box2d.h"
+#include "Math/Vector2.h"
 
 namespace nc
 {
@@ -13,6 +14,7 @@ namespace nc
 			float density{ 0 };
 			float friction{ 1 };
 			float restitution{ 0.3f };
+			float gravityScale{ 1.0f };
 			bool lockAngle{ false };
 			bool isDynamic{ false };
 			bool isSensor{ false };

@@ -5,9 +5,11 @@
 #include "Graphics/Texture.h"
 #include "Objects/GameObject.h"
 #include "Components/PlayerComponents.h"
+#include "Components/EnemyComponent.h"
 #include "Core/JSON.h"
 #include "Objects/ObjectFactory.h"
 #include "Objects/Scene.h"
+#include "TileMap.h"
 
 nc::Engine engine;
 nc::Scene scene;
@@ -19,19 +21,26 @@ int main(int, char**)
 
 	nc::ObjectFactory::Instance().Initialize();
 	nc::ObjectFactory::Instance().Register("PlayerComponent", new nc::Creator<nc::PlayerComponent, nc::Object>);
+	nc::ObjectFactory::Instance().Register("EnemyComponent", new nc::Creator<nc::EnemyComponent, nc::Object>);
 
 	rapidjson::Document document;
 	nc::json::Load("scene.txt", document);
 	scene.Read(document);
 
-	for (size_t i = 0; i < 10; i++)
-	{
-		nc::GameObject* gameObject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoCoin");
-		gameObject->m_transform.position = { nc::random(0, 800), nc::random(300, 450) };
-		//gameObject->m_transform.angle = nc::random(0, 360);
-		
-		scene.AddGameObject(gameObject);
-	}
+	nc::TileMap tileMap;
+	nc::json::Load("tilemap.txt", document);
+	scene.Create(&engine);
+	tileMap.Read(document);
+	tileMap.Create(&scene);
+
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	nc::GameObject* gameObject = nc::ObjectFactory::Instance().Create<nc::GameObject>("ProtoCoin");
+	//	gameObject->m_transform.position = { nc::random(0, 800), nc::random(300, 450) };
+	//	//gameObject->m_transform.angle = nc::random(0, 360);
+	//	
+	//	scene.AddGameObject(gameObject);
+	//}
 
 	SDL_Event event;
 	bool quit = false;
