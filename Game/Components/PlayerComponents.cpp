@@ -10,6 +10,9 @@ namespace nc
 	void PlayerComponent::Create(void* data)
 	{
 		m_owner = static_cast<GameObject*>(data);
+
+		EventManager::Instance().Subscribe("CollisionEnter", std::bind(&PlayerComponent::OnCollisionEnter, this, std::placeholders::_1), m_owner);
+		EventManager::Instance().Subscribe("CollisionExit", std::bind(&PlayerComponent::OnCollisionExit, this, std::placeholders::_1), m_owner);
 	}
 
 	void PlayerComponent::Destroy()
@@ -38,6 +41,8 @@ namespace nc
 			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
 			if (audioComponent)
 			{
+				AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+				audioComponent->SetSoundName("wav/jump.wav");
 				audioComponent->Play();
 			}
 
@@ -66,6 +71,43 @@ namespace nc
 		auto enemyContacts = m_owner->GetContactsWithTag("Enemy");
 		if (!enemyContacts.empty()) std::cout << "enemy hit\n";
 
+	}
+
+	void PlayerComponent::OnCollisionEnter(const Event& event)
+	{
+		GameObject* gameObject = dynamic_cast<GameObject*>(event.sender);
+
+		if (gameObject->m_tag == "Enemy")
+		{
+			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+			audioComponent->SetSoundName("wav/grunt.wav");
+			audioComponent->Play();
+
+			m_owner->m_flags[GameObject::eFlags::DESTROY] = true;
+
+			Event event;
+			event.type = "PlayerDead";
+			int score = 300;
+			event.data = &score;
+			EventManager::Instance().Notify(event);
+		}
+
+		if (gameObject->m_tag == "Coin")
+		{
+			AudioComponent* audioComponent = m_owner->GetComponent<AudioComponent>();
+			audioComponent->SetSoundName("wav/coin.wav");
+			audioComponent->Play();
+
+			gameObject->m_flags[GameObject::eFlags::DESTROY] = true;
+		}
+
+	}
+
+	void PlayerComponent::OnCollisionExit(const Event& event)
+	{
+		GameObject* gameObject = dynamic_cast<GameObject*>(event.sender);
+
+		std::cout << "collision exit: " << gameObject->m_name << std::endl;
 	}
 
 }

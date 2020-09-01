@@ -172,6 +172,8 @@
     <ClInclude Include="Components\SpriteAnimationComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
     <ClInclude Include="Core\Assert.h" />
+    <ClInclude Include="Core\EventManager.h" />
+    <ClInclude Include="Core\EventSystem.h" />
     <ClInclude Include="Core\Factory.h" />
     <ClInclude Include="Core\JSON.h" />
     <ClInclude Include="Core\Singleton.h" />
@@ -209,6 +211,7 @@
     <ClCompile Include="Components\SpriteAnimationComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
     <ClCompile Include="Core\Assert.cpp" />
+    <ClCompile Include="Core\EventManager.cpp" />
     <ClCompile Include="Core\JSON.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Engine.cpp" />

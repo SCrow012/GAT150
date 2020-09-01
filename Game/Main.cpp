@@ -7,12 +7,21 @@
 #include "Components/PlayerComponents.h"
 #include "Components/EnemyComponent.h"
 #include "Core/JSON.h"
+#include "Core/EventManager.h"
 #include "Objects/ObjectFactory.h"
 #include "Objects/Scene.h"
 #include "TileMap.h"
 
 nc::Engine engine;
 nc::Scene scene;
+
+void OnPlayerDead(const nc::Event& event)
+{
+	int* pdata = static_cast<int*>(event.data);
+	int score = *pdata;
+
+	std::cout << "PlayerDead: " << score << std::endl;
+}
 
 int main(int, char**)
 {
@@ -22,6 +31,8 @@ int main(int, char**)
 	nc::ObjectFactory::Instance().Initialize();
 	nc::ObjectFactory::Instance().Register("PlayerComponent", new nc::Creator<nc::PlayerComponent, nc::Object>);
 	nc::ObjectFactory::Instance().Register("EnemyComponent", new nc::Creator<nc::EnemyComponent, nc::Object>);
+
+	nc::EventManager::Instance().Subscribe("PlayerDead", &OnPlayerDead);
 
 	rapidjson::Document document;
 	nc::json::Load("scene.txt", document);
